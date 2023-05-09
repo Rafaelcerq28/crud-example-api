@@ -34,12 +34,21 @@ public class CursoController {
     CursoService cursoService;
 
     //endpoint POST (objetivo e GRAVAR os dados)
+    //cria curso e retorna o location desse curso Ex: http://localhost:8080/api/cursos/1
+    @PostMapping("/cursos")
+    public ResponseEntity<Curso> criarCurso (@RequestBody Curso curso){
+        return cursoService.criarCurso(curso);
+    }
+
+    /*
+    CRIAR CURSOS POREM SEM RETORNAR O LOCATION
+    
     @PostMapping("/cursos")
     @ResponseStatus(HttpStatus.CREATED)
     public Curso criarCurso (@RequestBody Curso curso){
-
-        return cursoService.criarCurso(curso);
+         return cursoService.criarCurso(curso);
     }
+    */
 
     //endpoint GET (objetivo: BUSCAR TODOS os dados)
     @GetMapping("/cursos")
@@ -62,7 +71,7 @@ public class CursoController {
         return cursoService.atualizarCursoPeloId(curso, id);
     }
 
-    //endpoint POST (objetivo: DELETAR os dados)
+    //endpoint DELETE (objetivo: DELETAR os dados)
     @DeleteMapping("/cursos/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Object> excluirCursoPeloId(@PathVariable(value = "id") Long id, @RequestBody Curso curso){
