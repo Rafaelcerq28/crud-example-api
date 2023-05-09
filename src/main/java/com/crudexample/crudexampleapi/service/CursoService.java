@@ -1,10 +1,13 @@
 package com.crudexample.crudexampleapi.service;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
 import org.hibernate.annotations.NotFound;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.stereotype.Service;
 
 import com.crudexample.crudexampleapi.model.Curso;
@@ -25,9 +28,24 @@ public class CursoService {
     private CursoRepository cursoRepository;
 
     //metodo para CRIAR curso
+    public ResponseEntity<Curso> criarCurso(Curso curso){
+
+        //persiste o curso no banco 
+        Curso savedCurso = cursoRepository.save(curso);
+        //Armazena o location em uma uri Ex: http://localhost:8080/api/cursos/1
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().
+        path("/{id}").buildAndExpand(savedCurso.getId()).toUri();
+
+        //Retorna o curso com o status criado e a localizacao
+        return ResponseEntity.created(location).body(savedCurso);
+    }
+
+    /*
+    CRIAR CURSO POREM SEM RETORNAR A LOCATION
     public Curso criarCurso(Curso curso){
         return cursoRepository.save(curso);
     }
+    */
 
     //Metodo para BUSCAR TODOS os cursos
     public List<Curso> listarCursos(){
