@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.crudexample.crudexampleapi.model.Curso;
 import com.crudexample.crudexampleapi.service.CursoService;
 
+import jakarta.validation.Valid;
+
 /*
  * 
  * AQUI COLOCAMOS OS ENDPOINTS DA NOSSA APLICACAO "/ONDEQUEREMOSCHEGAR"
@@ -35,8 +37,9 @@ public class CursoController {
 
     //endpoint POST (objetivo e GRAVAR os dados)
     //cria curso e retorna o location desse curso Ex: http://localhost:8080/api/cursos/1
+    //Anotacao @Valid para validar os campos no nosso model
     @PostMapping("/cursos")
-    public ResponseEntity<Curso> criarCurso (@RequestBody Curso curso){
+    public ResponseEntity<Curso> criarCurso (@Valid  @RequestBody Curso curso){
         return cursoService.criarCurso(curso);
     }
 

@@ -7,12 +7,19 @@ import java.util.Date;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Size;
 
 /*
  *
@@ -26,33 +33,37 @@ import jakarta.persistence.Table;
 @Table(name = "curso")
 public class Curso {
  
-    /* Teste para criar um CreatedAt sem utilizar anotacao passando a data direto no construtor do objeto
-    public Curso() {
-        SimpleDateFormat formatador = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        Date data = new Date();
-        this.createdAt = formatador.format(data);
-    }
-     */
-
     //Anotacao de ID e informacao do tipo de geracao desses IDs (Nesse caso e sequencial)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    //Valida o tamanho do texto
+    @Size(min = 2)
+    //anotacao para alterar o nome da variavel no json (lembrando que no arquivo JSON a ser recebido deve ser escrito da mesma forma)
+    @JsonProperty("curso_nome")
     //Anotacao para informar que esse campo nao pode ser nulo
     @Column(nullable = false)
     private String nome;
-
+    
+    //Valida o valor minimo
+    @Min(10)
     @Column(nullable = false)
     private double preco;
 
+    @JsonProperty("instrutor_nome")
+    @Size(min = 2)
     @Column(nullable = false)
     private String pessoaInstrutora;
-
+ 
+    @JsonProperty("data_criacao")
+    @PastOrPresent
     @CreationTimestamp
     private Instant createdAt;
 
     @UpdateTimestamp
+    @JsonIgnore
+    @JsonProperty("data_atualizacao")
     private Instant updatedAt;
 
     //Getters e Setters
