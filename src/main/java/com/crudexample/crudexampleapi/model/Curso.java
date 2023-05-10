@@ -3,6 +3,7 @@ package com.crudexample.crudexampleapi.model;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Date;
+import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -15,6 +16,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Min;
@@ -65,6 +67,11 @@ public class Curso {
     @JsonIgnore
     @JsonProperty("data_atualizacao")
     private Instant updatedAt;
+
+    
+    @OneToMany(mappedBy = "curso")
+    @JsonIgnore
+    private List<Aluno> alunos;
 
     //Getters e Setters
     public Instant getCreatedAt() {

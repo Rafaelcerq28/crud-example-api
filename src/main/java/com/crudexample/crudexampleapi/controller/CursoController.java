@@ -76,8 +76,11 @@ public class CursoController {
 
     //endpoint DELETE (objetivo: DELETAR os dados)
     @DeleteMapping("/cursos/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public ResponseEntity<Object> excluirCursoPeloId(@PathVariable(value = "id") Long id, @RequestBody Curso curso){
+    @ResponseStatus(HttpStatus.NO_CONTENT)                                                //esse @RequestBody e opcional
+    public ResponseEntity<Object> excluirCursoPeloId(@PathVariable(value = "id") Long id){//}, @RequestBody Curso curso){
         return cursoService.excluirCursoPeloId(id);
     }
+
+    
 }
+
