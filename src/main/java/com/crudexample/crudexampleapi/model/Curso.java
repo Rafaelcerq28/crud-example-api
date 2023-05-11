@@ -122,6 +122,14 @@ public class Curso {
         this.pessoaInstrutora = pessoaInstrutora;
     }
 
+    public List<Aluno> getAlunos() {
+        return alunos;
+    }
+
+    public void setAlunos(List<Aluno> alunos) {
+        this.alunos = alunos;
+    }
+
     
 }
 

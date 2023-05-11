@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class Aluno {
@@ -16,6 +17,7 @@ public class Aluno {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Size(min = 2)
     private String nome;
 
     //Mapeando o curso para fazer relacionamento entre tabelas 
@@ -39,6 +41,14 @@ public class Aluno {
         this.nome = nome;
     }
 
+    public Curso getCurso() {
+        return curso;
+    }
+
+    public void setCurso(Curso curso) {
+        this.curso = curso;
+    }
+    
     @Override
     public String toString() {
         return "Aluno [id=" + id + ", nome=" + nome + "]";

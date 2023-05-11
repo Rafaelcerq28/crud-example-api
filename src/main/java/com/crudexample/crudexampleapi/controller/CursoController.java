@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.crudexample.crudexampleapi.model.Aluno;
 import com.crudexample.crudexampleapi.model.Curso;
 import com.crudexample.crudexampleapi.service.CursoService;
 
@@ -76,11 +77,30 @@ public class CursoController {
 
     //endpoint DELETE (objetivo: DELETAR os dados)
     @DeleteMapping("/cursos/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)                                                //esse @RequestBody e opcional
+    @ResponseStatus(HttpStatus.NO_CONTENT)                                                //nesse caso esse @RequestBody e opcional
     public ResponseEntity<Object> excluirCursoPeloId(@PathVariable(value = "id") Long id){//}, @RequestBody Curso curso){
         return cursoService.excluirCursoPeloId(id);
     }
 
-    
+    //endpoint para pegar uma LISTA de todos os alunos do curso 
+    @GetMapping("/cursos/{id}/alunos")
+    @ResponseStatus(HttpStatus.OK)                                                
+    public ResponseEntity<Object> listarAlunos(@PathVariable(value = "id") Long id){
+        return cursoService.listarAlunos(id);
+    }
+
+    //endpoint para CRIAR um aluno no curso 
+    @PostMapping("/cursos/{id}/alunos")
+    @ResponseStatus(HttpStatus.CREATED)                                                
+    public ResponseEntity<Aluno> criarAlunoNoCurso(@PathVariable(value = "id") Long id, @Valid  @RequestBody Aluno aluno){
+        return cursoService.criarAlunoNoCurso(id, aluno);
+    }
+
+    //buscando um aluno pelo ID dentro do curso
+    @GetMapping("/cursos/{idCurso}/alunos/{idAluno}")
+    @ResponseStatus(HttpStatus.OK)                                                
+    public ResponseEntity<Object> pegarAlunoNoCursoPeloId(@PathVariable(value = "idCurso") Long idCurso, @PathVariable(value = "idAluno") long idAluno){
+        return cursoService.pegarAlunoNoCursoPeloId(idCurso,idAluno);
+    }
 }
 
